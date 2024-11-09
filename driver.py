@@ -2,12 +2,13 @@ from nav import Nav
 import streamlit as st
 
 
-def page1():
-    st.write('test')
+def support():
+    st.title("request Human Help")
    
 navigation = Nav(
     [st.Page('finance_help.py'),
-     st.Page("chatbot.py")]
+     st.Page("chatbot.py"),
+     st.Page(support)]
      )
 
 
