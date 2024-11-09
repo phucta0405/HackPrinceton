@@ -8,7 +8,7 @@ def support():
 navigation = Nav(
     [st.Page('home.py'),
     st.Page('finance_help.py'),
-    st.Page('taxestimator.py'),
+    st.Page('tax_estimator.py'),
      st.Page("chatbot.py"),
      st.Page(support)]
 )

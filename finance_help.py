@@ -30,11 +30,8 @@ with col2:
     expenses = st.number_input("Monthly Operating Expenses ($)", min_value=0.0, format="%.2f", help="Total monthly business operating costs.")
 
 # Key Metrics Calculation with Edge Handling
-if income > 0:
-    debt_to_income_ratio = (debt / income) * 100
-    savings_rate = (savings / (income * 12)) * 100
-else:
-    debt_to_income_ratio = savings_rate = 0
+debt_to_income_ratio = (debt / income * 100) if income > 0 else 0
+savings_rate = (savings / (income * 12) * 100) if income > 0 else 0
 
 # Emergency Fund Calculation
 emergency_fund_months = (savings / expenses) if expenses > 0 else float('inf') if savings > 0 else 0
@@ -125,17 +122,14 @@ col6, col7 = st.columns(2)
 with col6:
     st.subheader("Gross Profit Margin")
     gross_profit = st.number_input("Gross Profit ($)", min_value=0.0, format="%.2f", help="Your total profit after cost of goods sold.")
-    if income > 0:
-        gross_profit_margin = (gross_profit / income) * 100
-        st.write(f"**{gross_profit_margin:.2f}%**")
-        if gross_profit_margin > 50:
-            st.success("Excellent profit margin.")
-        elif 20 <= gross_profit_margin <= 50:
-            st.warning("Average profit margin.")
-        else:
-            st.error("Low profit margin.")
+    gross_profit_margin = (gross_profit / income * 100) if income > 0 else 0
+    st.write(f"**{gross_profit_margin:.2f}%**")
+    if gross_profit_margin > 50:
+        st.success("Excellent profit margin.")
+    elif 20 <= gross_profit_margin <= 50:
+        st.warning("Average profit margin.")
     else:
-        st.write("Enter revenue data to calculate.")
+        st.error("Low profit margin.")
 
 with col7:
     st.subheader("Net Profit Margin")
@@ -150,17 +144,14 @@ with col7:
         st.error("Low net profit margin.")
 
 # Goal Setting Section
-# Set Financial Goals Section
 st.header("Set Financial Goals")
 
-# Define minimum and maximum values for the revenue and cash reserve goals
-revenue_goal_min = 0
+# Set financial goals only if valid ranges are available
 revenue_goal_max = int(income * 12 * 2) if income > 0 else 0
 cash_goal_max = int(savings * 2) if savings > 0 else 0
 
-# Set financial goals only if valid ranges are available
-if revenue_goal_max > revenue_goal_min:
-    revenue_goal = st.slider("Annual Revenue Goal ($)", min_value=revenue_goal_min, max_value=revenue_goal_max, 
+if revenue_goal_max > 0:
+    revenue_goal = st.slider("Annual Revenue Goal ($)", min_value=0, max_value=revenue_goal_max, 
                              value=int(income * 12 * 1.5), help="Set your target for annual revenue.")
 else:
     st.write("No revenue goal data to display.")
@@ -171,7 +162,7 @@ if cash_goal_max > 0:
 else:
     st.write("No cash reserve goal data to display.")
 
-# Display progress toward financial goals if applicable
+# Progress Towards Goals
 st.subheader("Progress Towards Goals")
 
 # Projected Annual Revenue Calculation

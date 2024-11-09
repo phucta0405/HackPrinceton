@@ -1,6 +1,6 @@
 import streamlit as st
 from model import *
-st.title("Chatbot")
+st.title("Financial Helper Chatbot")
 
 cb = Chatbot()
 
