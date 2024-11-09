@@ -1,14 +1,14 @@
 from nav import Nav
 import streamlit as st
 
-def support():
-    st.title("Request Human Help")
 
 # Set up navigation with st.page for accessing external .py files
 navigation = Nav(
-    [st.Page('home.py'),
-    st.Page('finance_help.py'),
-    st.Page('tax_estimator.py'),
-     st.Page("chatbot.py"),
-     st.Page(support)]
+    [
+        st.Page('home.py', title="Home"),
+        st.Page('finance_help.py', title="Finance Help"),
+        st.Page('taxestimator.py', title="Tax Estimator"),
+        st.Page('chatbot.py', title="Chatbot"),
+        st.Page('humanhelp.py', title="Request Help")
+    ]
 )
