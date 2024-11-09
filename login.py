@@ -17,6 +17,8 @@ def register_user(username, password):
         users_db[username] = hash_password(password)
         st.success("User registered successfully! Please log in.")
 
+
+
 # Login function
 def login_user(username, password):
     if username not in users_db:
@@ -37,7 +39,7 @@ def logout_user():
 
 # Main app layout
 def main():
-    st.title("User Login Application")
+    st.title("Login Page")
 
     if 'logged_in' not in st.session_state:
         st.session_state['logged_in'] = False
