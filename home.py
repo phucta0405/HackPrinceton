@@ -1,7 +1,15 @@
 import streamlit as st
 
+
 # Set page configuration
 st.set_page_config(page_title="Home Page", layout="centered")
+
+def show_home():
+    st.title("🏠 Home Page")
+    st.write("Welcome to the **Home Page**. Explore the app's features and get started on your journey to financial wellness.")
+
+# Show home page content
+show_home()
 
 # Title
 st.title("Welcome to the Financial Wellness App 💸")
