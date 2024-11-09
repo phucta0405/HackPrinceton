@@ -6,7 +6,8 @@ def support():
     st.title("request Human Help")
    
 navigation = Nav(
-    [st.Page('finance_help.py'),
+    [st.Page('home.py'),
+        st.Page('finance_help.py'),
      st.Page("chatbot.py"),
      st.Page(support)]
      )

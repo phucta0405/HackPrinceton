@@ -81,30 +81,39 @@ st.subheader("Income Allocation")
 remaining_income = max(income - (debt + expenses), 0)  # Prevents negative remaining income
 income_allocation = np.array([debt, expenses, remaining_income])
 labels = ['Debt', 'Expenses', 'Remaining Income']
-fig, ax = plt.subplots()
-ax.pie(income_allocation, labels=labels, autopct='%1.1f%%', startangle=90)
-ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
-st.pyplot(fig)
+if income_allocation.sum() > 0:  # Only display if there is a non-zero sum
+    fig, ax = plt.subplots()
+    ax.pie(income_allocation, labels=labels, autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
+    st.pyplot(fig)
+else:
+    st.write("No income allocation to display.")
 
 # Bar Chart: Monthly vs Annual Savings with Edge Case Handling
 st.subheader("Monthly vs Annual Savings")
 monthly_savings = max(income - (debt + expenses), 0)  # Prevent negative monthly savings
 annual_savings = monthly_savings * 12
-savings_df = pd.DataFrame(
-    {'Amount': [monthly_savings, annual_savings]},
-    index=['Monthly Savings', 'Annual Savings']
-)
-st.bar_chart(savings_df)
+if monthly_savings > 0:
+    savings_df = pd.DataFrame(
+        {'Amount': [monthly_savings, annual_savings]},
+        index=['Monthly Savings', 'Annual Savings']
+    )
+    st.bar_chart(savings_df)
+else:
+    st.write("No savings data to display.")
 
 # Line Chart: Projected Savings Growth Over 5 Years with Edge Case Handling
 st.subheader("Projected Savings Growth (5 Years)")
 months = np.arange(1, 61)  # 5 years in months
 projected_savings = np.cumsum(np.full_like(months, monthly_savings))
-savings_growth_df = pd.DataFrame({
-    'Month': months,
-    'Projected Savings ($)': projected_savings
-})
-st.line_chart(savings_growth_df.set_index('Month'))
+if monthly_savings > 0:
+    savings_growth_df = pd.DataFrame({
+        'Month': months,
+        'Projected Savings ($)': projected_savings
+    })
+    st.line_chart(savings_growth_df.set_index('Month'))
+else:
+    st.write("No projected savings growth to display.")
 
 # Footer
 st.caption("Use this tool to assess your financial wellness and set goals for improvement.")
