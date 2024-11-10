@@ -29,7 +29,7 @@ def extract_w2_data_from_pdf(pdf_path):
         images = convert_from_path(pdf_path)
         text = pytesseract.image_to_string(images[0])
         w2_data = {
-            'wages': re.search(r'Wages.*\$(\d{1,3}(,\d{3})*(\.\d{2})?)', text),
+            'wages': re.search(r'Income.*\$(\d{1,3}(,\d{3})*(\.\d{2})?)', text),
             'federal_tax_withheld': re.search(r'Federal.*\$(\d{1,3}(,\d{3})*(\.\d{2})?)', text),
             'social_security_wages': re.search(r'Social Security Wages.*\$(\d{1,3}(,\d{3})*(\.\d{2})?)', text),
             'medicare_wages': re.search(r'Medicare Wages.*\$(\d{1,3}(,\d{3})*(\.\d{2})?)', text)
