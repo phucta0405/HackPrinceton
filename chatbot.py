@@ -2,7 +2,7 @@ import streamlit as st
 from model import *
 st.title("Financial Helper Chatbot")
 
-cb = Chatbot()
+cb = CerebrasChatbot()
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
