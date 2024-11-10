@@ -19,5 +19,9 @@ def support():
                 st.success("Thank you for your request! We will get back to you soon.")
             else:
                 st.error("Please fill out all fields.")
-st.set_page_config(page_title="Request Human Help", layout="centered")
+
+# Set page configuration
+# st.set_page_config(page_title="Request Human Help", layout="centered")
+
+# Call the support function when this page is selected
 support()

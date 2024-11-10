@@ -1,0 +1,17 @@
+usernames:
+  bluesky12345:
+    email: bluesky12345@gmail.com
+    name: 'Chris Kennedy '
+    password: $2b$12$FKAJj3ZY5CBMYfeOSu94yumeEE3GT.XSUFIy8S4S2FXJEEau4/e3.
+  nut:
+    email: CapitalOne01234@gmail.com
+    name: nut
+    password: $2b$12$WikqTdXHjPUcn2MxMCLRW.SAu7NFkRcy/ofE6Q1gFB0DV4fR1kCJe
+  username1:
+    email: user1@example.com
+    name: User One
+    password: $2b$12$hashedpassword...
+  username2:
+    email: user2@example.com
+    name: User Two
+    password: $2b$12$hashedpassword...

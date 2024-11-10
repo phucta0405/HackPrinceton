@@ -1,6 +1,7 @@
 import streamlit as st
 
-st.set_page_config(page_title="Home Page", layout="centered")
+# Set page configuration
+# st.set_page_config(page_title="Home Page", layout="centered")
 
 def show_home():
     st.image("logo.png", width=400)

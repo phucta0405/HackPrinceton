@@ -1,71 +1,101 @@
 import streamlit as st
-import hashlib
+import streamlit_authenticator as stauth
+import yaml
+from yaml.loader import SafeLoader
+from pathlib import Path
+import bcrypt
+from nav import *
+# Path to YAML file
+DB_FILE = Path("db.yaml")
 
-# In-memory storage for user data (for demonstration purposes)
-# In a real application, consider using a database to store user credentials securely.
-users_db = {}
+# Load YAML data
+def load_db():
+    with open('db.yaml') as file:
+        config = yaml.load(file, Loader=SafeLoader)
+    return config
 
-# Helper function to hash passwords
+
+# Save data to YAML
+def save_db(data):
+    with open(DB_FILE, "w") as file:
+        yaml.dump(data, file)
+
+# Hash password
 def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-# Registration function
-def register_user(username, password):
-    if username in users_db:
-        st.warning("Username already taken!")
-    else:
-        users_db[username] = hash_password(password)
-        st.success("User registered successfully! Please log in.")
+# Initialize authenticator
+def init_authenticator():
+    return stauth.Authenticate(load_db(), "app", "abcdef", cookie_expiry_days=1)
+
+def login_redirect():
+    st.session_state["active_tab"] = "Login"
+
+# User registration
+def register_user(name, username, email, password):
+    db = load_db()
+    if username in db["usernames"]:
+        st.error("Username already exists!")
+        return False
+    db["usernames"][username] = {
+        "name": name,
+        "email": email,
+        "password": hash_password(password),
+    }
+    save_db(db)
+    st.success("User registered successfully!")
+    login_redirect()
+    return True
+
+# Login page redirection
 
 
-
-# Login function
-def login_user(username, password):
-    if username not in users_db:
-        st.warning("User does not exist!")
-    elif users_db[username] != hash_password(password):
-        st.warning("Incorrect password!")
-    else:
-        st.session_state['logged_in'] = True
-        st.session_state['username'] = username
-        st.success(f"Welcome, {username}!")
-        st.switch_page("driver.py")
-
-# Logout function
-def logout_user():
-    st.session_state['logged_in'] = False
-    st.session_state['username'] = None
-    st.success("You have been logged out.")
-
-# Main app layout
+# Main app
 def main():
-    st.title("Login Page")
+    st.title("User Login Application")
 
-    if 'logged_in' not in st.session_state:
-        st.session_state['logged_in'] = False
-        st.session_state['username'] = None
+    # Tabs for login and registration
+    tab1, tab2 = st.tabs(["Register", "Login"])
+    # Registration tab
+    with tab1:
+        st.header("Register New User")
+        new_name = st.text_input("Name")
+        new_username = st.text_input("Username")
+        new_email = st.text_input("Email")
+        new_password = st.text_input("Password", type="password")
+        new_password_confirm = st.text_input("Confirm Password", type="password")
 
-    if st.session_state['logged_in']:
-        st.subheader(f"Hello, {st.session_state['username']}!")
-        if st.button("Logout"):
-            logout_user()
-    else:
-         option = st.selectbox("Choose an option", ["Login", "Register"])
-         if option == "Login":
-            st.subheader("Login")
-            username = st.text_input("Username")
-            password = st.text_input("Password", type="password")
+        if st.button("Register"):
+            if new_password == new_password_confirm:
+                register_user(new_name, new_username, new_email, new_password)
+                login_redirect()  # Redirect to login after successful registration
+            else:
+                st.error("Passwords do not match")
 
-            if st.button("Login"):
-                login_user(username, password)
+    # Login tab
+    with tab2:
+        authenticator = init_authenticator()
+        authenticator.login()
 
-            elif option == "Register":
-                st.subheader("Register")
-                new_username = st.text_input("Choose a Username")
-                new_password = st.text_input("Choose a Password", type="password")
+        if st.session_state["authentication_status"]:
+            authenticator.logout()
+            st.write(f'Welcome *{st.session_state["name"]}*')
+            navigation = Nav(
+                [
+                    st.Page('home.py', title="Home"),
+                    st.Page('finance_help.py', title="Finance Help"),
+                    st.Page('ml.py', title="Predictive Models"),
+                    st.Page('tax_estimator.py', title="Tax Estimator"),
+                    st.Page('chatbot.py', title="Chatbot"),
+                    st.Page('humanhelp.py', title="Request Help"),
+                    st.Page('taxfilling.py', title="NEW | Individual Tax Filling")
+                ]
+            )
+            # enter the rest of the streamlit app here
+        elif st.session_state["authentication_status"] is False:
+            st.error('Username/password is incorrect')
+        elif st.session_state["authentication_status"] is None:
+            st.warning('Please enter your username and password')
 
-            if st.button("Register"):
-                register_user(new_username, new_password)
-
-main()
-        
+if __name__ == "__main__":
+    main()
