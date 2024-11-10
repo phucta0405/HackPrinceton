@@ -69,3 +69,5 @@ docs/_build/
 # Windows
 Thumbs.db
 ehthumbs.db
+
+./secrets.toml
