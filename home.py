@@ -31,11 +31,11 @@ st.write("""
     """)
 
     # Add an image or a logo to the homepage (optional)
-st.image("https://www.example.com/your-logo.png", width=200)
+st.image("logo.png", width=200)
 
     # Call to Action: Link to the Financial Wellness Calculator
 st.write("### Ready to take the next step?")
-st.button("Start Calculating Your Financial Wellness", on_click=lambda: st.sidebar.radio("Go to", ["Financial Wellness Calculator"]))
+st.button("Start Calculating Your Financial Wellness", on_click=lambda: st.Page('finance_help.py'))
 
 # About Page
 st.header("About Our App")
