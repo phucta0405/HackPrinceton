@@ -1,4 +1,4 @@
-
+from model import *
     
 cb = CerebrasChatbot()
 while True:

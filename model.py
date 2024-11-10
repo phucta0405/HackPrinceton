@@ -26,7 +26,8 @@ class CerebrasChatbot:
     def __init__(self):
         self.client = Cerebras(
             # This is the default and can be omitted
-            api_key="csk-xd8t5rj64mmk6j969t2hn26henttx5xc3jhh3jt9m9px8rkm",
+            api_key = os.environ.get("CEREBRAS_API_KEY"),
+            # api_key="csk-xd8t5rj64mmk6j969t2hn26henttx5xc3jhh3jt9m9px8rkm",
         )
         self.messages = []
     
