@@ -1,11 +1,7 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-
-# Set page configuration
 st.set_page_config(page_title="Small Business Tax Deduction Estimator", layout="centered")
-
-# Title and Description
 st.title("💼 Small Business Tax Deduction Estimator")
 st.markdown(
     """
@@ -14,26 +10,17 @@ st.markdown(
     """
 )
 
-# Tax Estimation Section
 st.header("Enter Your Tax Information")
 
-# Arrange inputs in two columns for income and expenses
 col1, col2 = st.columns(2)
-
-# Input for annual revenue and tax rate
 with col1:
     annual_income = st.number_input("Annual Revenue ($)", min_value=0.0, format="%.2f", help="Total annual revenue for tax estimation.")
     tax_rate = st.slider("Effective Tax Rate (%)", min_value=0.0, max_value=50.0, value=15.0, help="Estimated tax rate applicable to your business.")
 
-# Input for deductible expenses and tax credits
 with col2:
     deductible_expenses = st.number_input("Total Deductible Expenses ($)", min_value=0.0, format="%.2f", help="Sum of all deductible expenses.")
     other_tax_credits = st.number_input("Other Tax Credits ($)", min_value=0.0, format="%.2f", help="Other available tax credits.")
-
-# Deduction Categories Section
 st.header("Deduction Categories")
-
-# Deduction categories for more detailed analysis
 deductions = {
     "Operational Costs": 0.0,
     "Salaries and Wages": 0.0,
@@ -41,43 +28,31 @@ deductions = {
     "Supplies": 0.0,
     "Utilities": 0.0
 }
-
-# Gather inputs for each deduction category
 for category in deductions:
     deductions[category] = st.number_input(f"{category} ($)", min_value=0.0, format="%.2f", help=f"Enter total amount spent on {category.lower()}.")
 
-# Total deductions
 total_deductions = sum(deductions.values())
 st.write(f"**Total Deductions:** ${total_deductions:,.2f}")
 
-# Tax Liability Calculation
 st.header("Tax Liability and Savings")
 
-# Calculate taxable income after deductions
 taxable_income = max(annual_income - total_deductions, 0)
-
-# Calculate estimated tax liability
 estimated_tax_liability = (taxable_income * (tax_rate / 100)) - other_tax_credits
 estimated_tax_liability = max(estimated_tax_liability, 0)  # Ensure no negative tax liability
 
-# Display results
 st.subheader("Results")
 
 st.write(f"**Taxable Income after Deductions:** ${taxable_income:,.2f}")
 st.write(f"**Estimated Tax Liability:** ${estimated_tax_liability:,.2f}")
-
-# Tax Savings Analysis for each category
 if total_deductions > 0:
     savings_from_deductions = annual_income * (tax_rate / 100) - estimated_tax_liability
     st.write(f"**Potential Tax Savings from Deductions:** ${savings_from_deductions:,.2f}")
 else:
     st.write("No deductions entered; add deductible expenses to estimate potential tax savings.")
 
-# Breakdown of deductions and their impact
 st.subheader("Tax Savings Breakdown by Category")
 category_contribution = {category: deductions[category] * (tax_rate / 100) for category in deductions}
 
-# Display contribution of each category to tax savings
 category_data = list(category_contribution.values())
 category_labels = list(category_contribution.keys())
 category_data.sort(reverse=True)
