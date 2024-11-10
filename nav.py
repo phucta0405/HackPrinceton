@@ -2,8 +2,8 @@ import streamlit as st
 
 class Nav:
     def __init__(self,pages):
-        pg = st.navigation(pages)
-        pg.run()
+        self.pages = st.navigation(pages)
+        self.pages.run()
         
 
         

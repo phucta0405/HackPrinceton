@@ -1,6 +1,8 @@
 import streamlit as st
 
 
+
+
 # Set page configuration
 st.set_page_config(page_title="Home Page", layout="centered")
 
@@ -35,7 +37,7 @@ st.image("logo.png", width=200)
 
     # Call to Action: Link to the Financial Wellness Calculator
 st.write("### Ready to take the next step?")
-st.button("Start Calculating Your Financial Wellness", on_click=lambda: st.Page('finance_help.py'))
+st.link_button("Start Calculating Your Financial Wellness", "finance_help")
 
 # About Page
 st.header("About Our App")
