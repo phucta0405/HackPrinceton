@@ -28,7 +28,7 @@ def support():
                 st.error("Please fill out all fields.")
 
 # Set page configuration
-st.set_page_config(page_title="Request Human Help", layout="centered")
+# st.set_page_config(page_title="Request Human Help", layout="centered")
 
 # Call the support function when this page is selected
 support()

@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Set page configuration
-st.set_page_config(page_title="Small Business Financial Wellness App", layout="centered")
+# # Set page configuration
+# st.set_page_config(page_title="Small Business Financial Wellness App", layout="centered")
 
 # Title and Description
 st.title("📈 Small Business Financial Wellness App")

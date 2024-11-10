@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-st.set_page_config(page_title="Small Business Tax Deduction Estimator", layout="centered")
+# st.set_page_config(page_title="Small Business Tax Deduction Estimator", layout="centered")
 st.title("💼 Small Business Tax Deduction Estimator")
 st.markdown(
     """

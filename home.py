@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Set page configuration
-st.set_page_config(page_title="Home Page", layout="centered")
+# st.set_page_config(page_title="Home Page", layout="centered")
 
 def show_home():
     st.title("🏠 Home Page")
