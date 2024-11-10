@@ -10,8 +10,7 @@ navigation = Nav(
         st.Page('ml.py', title="Predictive Models"),
         st.Page('tax_estimator.py', title="Tax Estimator"),
         st.Page('chatbot.py', title="Chatbot"),
-        st.Page('humanhelp.py', title="Request Help")
+        st.Page('humanhelp.py', title="Request Help"),
         st.Page('taxfilling.py', title="NEW | Individual Tax Filling")
-
     ]
 )
